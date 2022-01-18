@@ -4,7 +4,7 @@ import picounicorn
 
 picounicorn.init()
 
-test_mode = True
+test_mode = False
 
 RED = {
     "r":255,
@@ -34,30 +34,26 @@ def fill_screen(colour):
 
 
 def pomodero():
-    colour = RED
     phase = "work"
-    countdown_seconds = WORK_SECONDS
 
     while not(picounicorn.is_pressed(picounicorn.BUTTON_Y)):
-        fill_screen(colour)
+        fill_screen(RED if phase == 'work' else GREEN)
+        sleep_per_cycle = WORK_SECONDS/TOTAL_PIXELS if phase == 'work' else BREAK_SECONDS/TOTAL_PIXELS
 
         for x in range(WIDTH):
             for y in range(HEIGHT):
                 if not(picounicorn.is_pressed(picounicorn.BUTTON_Y)):
                     picounicorn.set_pixel(x, y, 0, 0, 0)
-                    utime.sleep(countdown_seconds/TOTAL_PIXELS)
+                    utime.sleep(sleep_per_cycle)
                 else:
                     fill_screen(BLACK)
                     break
                 
-        
         if phase == "work":
             phase = "break"
-            colour=GREEN
             countdown_seconds = BREAK_SECONDS
         elif phase == "break":
             phase = "work"
-            colour=RED
             countdown_seconds = WORK_SECONDS
         pass
 
