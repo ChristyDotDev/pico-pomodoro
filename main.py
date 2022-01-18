@@ -51,10 +51,8 @@ def pomodero():
                 
         if phase == "work":
             phase = "break"
-            countdown_seconds = BREAK_SECONDS
         elif phase == "break":
             phase = "work"
-            countdown_seconds = WORK_SECONDS
         pass
 
 
